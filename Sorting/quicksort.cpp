@@ -1,72 +1,57 @@
-#include<iostream>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-
-int partition( int arr[], int s, int e) {
-
+int partition(vector<int>& arr, int s, int e) {
     int pivot = arr[s];
-
     int cnt = 0;
-    for(int i = s+1; i<=e; i++) {
-        if(arr[i] <=pivot) {
+    for (int i = s + 1; i <= e; i++) {
+        if (arr[i] <= pivot) {
             cnt++;
         }
     }
-
-    
-    int pivotIndex = s + cnt;
-    swap(arr[pivotIndex], arr[s]);
-
+    int pi = s + cnt;
+    swap(arr[pi], arr[s]);
     int i = s, j = e;
-
-    while(i < pivotIndex && j > pivotIndex) {
-
-        while(arr[i] <= pivot) 
-        {
+    while (i < pi && j > pi) {
+        while (arr[i] < pivot) {
             i++;
         }
-
-        while(arr[j] > pivot) {
+        while (arr[j] > pivot) {
             j--;
         }
-
-        if(i < pivotIndex && j > pivotIndex) {
+        if (i < pi && j > pi) {
             swap(arr[i++], arr[j--]);
         }
-
     }
-
-    return pivotIndex;
-
+    return pi;
 }
 
-void quickSort(int arr[], int s, int e) {
-
-    if(s >= e) 
-        return ;
-
-   
+void quicksort(vector<int>& arr, int s, int e) {
+    if (s >= e) {
+        return;
+    }
     int p = partition(arr, s, e);
-
-    quickSort(arr, s, p-1);
-
-
-    quickSort(arr, p+1, e);
-
+    quicksort(arr, s, p - 1);
+    quicksort(arr, p + 1, e);
 }
 
 int main() {
-
-    int arr[10] = {2,4,1,6,9 ,9,9,9,9,9};
-    int n = 10;
-
-    quickSort(arr, 0, n-1);
-
-    for(int i=0; i<n; i++) 
-    {
+    int n;
+    cout << "Enter the number of elements: " << endl;
+    cin >> n;
+    
+    vector<int> arr(n);
+    cout << "Enter the elements:" << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    quicksort(arr, 0, n - 1);
+    
+    cout << "Sorted array: ";
+    for (int i = 0; i < n; i++) {
         cout << arr[i] << " ";
-    } cout << endl;
-
-
+    }
     return 0;
 }
